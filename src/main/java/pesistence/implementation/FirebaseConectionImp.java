@@ -12,18 +12,18 @@ package pesistence.implementation;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
-import firebase.persistence.IFirebaseConection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+import firebase.persistence.IFirebaseConnection;
 
 /**
  *
  * @author MoK
  */
 //making a connection to the needed firebase using Ifirebaseconnection interface.
-public class FirebaseConectionImp implements IFirebaseConection {
+public class FirebaseConectionImp implements IFirebaseConnection {
 
     @Override
     public void initFirebase(String link, String path) {

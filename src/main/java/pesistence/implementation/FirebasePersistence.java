@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseReference.CompletionListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import firebase.persistence.IFirebaseConection;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,6 +29,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import firebase.persistence.IFirebaseConnection;
 
 /**
  *
@@ -47,21 +47,25 @@ public class FirebasePersistence implements IFirebasePersistence {
 // (implementation of IFirebasePersistnce interface)puting data in the firebase using the put frim the Ifirebasepersistence
     //+ the inner class CompletionListenerImp
     @Override
-    public void addUser(String username, User admin) {
-        if (username != null) {
+    public boolean addUser(User user) {
 
-            DatabaseReference databaseReference = database.getInstance().getReference("/");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/");
+        DatabaseReference childReference = databaseReference.child("users").child(user.getUsername());
+        User testUser = getUser(user.getUsername());
+        if (testUser == null) {
 
-            DatabaseReference childReference = databaseReference.child("users").child(username);
+            //if (childReference != null) {
             CompletionListenerImpl Complistner = new CompletionListenerImpl();
-            childReference.setValue(admin, Complistner);
+            childReference.setValue(user, Complistner);
             try {
                 //wait for firebase to saves record.
                 countDownLatch.await();
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
+            return true; // Return true if we add a new user.
         }
+        return false; // Return false if not.
     }
 
 //(implementation of IFirebasePersistnce interface) geting data from firebase using the get from the ifirebase interface 
@@ -79,7 +83,8 @@ public class FirebasePersistence implements IFirebasePersistence {
             //z countDownLatch.await(1, TimeUnit.SECONDS);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(FirebasePersistence.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FirebasePersistence.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
         User admin = listener.getAdmin();
@@ -96,14 +101,16 @@ public class FirebasePersistence implements IFirebasePersistence {
             childReference.removeValue();
             try {
                 countDownLatch.await();
+
             } catch (InterruptedException ex) {
-                Logger.getLogger(FirebasePersistence.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FirebasePersistence.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
             countDownLatch.countDown();
             deleteChecker = true;
         }
         if (deleteChecker == false) {
-            System.out.println("no user by that username foud");
+            System.out.println("no user by that username found");
         }
         return username + " " + "is deleted!";
 
@@ -117,6 +124,7 @@ public class FirebasePersistence implements IFirebasePersistence {
     @Override
     public List<User> getUserd() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     private class ValueEListnerImpl implements ValueEventListener {
@@ -129,7 +137,13 @@ public class FirebasePersistence implements IFirebasePersistence {
         @Override
         public void onDataChange(DataSnapshot ds) {
             adminInfo = ds.getValue(User.class);
-            System.out.println(adminInfo.toString());
+            /* if (adminInfo == null) {
+                System.out.println("Ingen bruger findes");
+            } else {
+                //System.out.println(adminInfo.toString());
+
+
+            } */
             countDownLatch.countDown();
 
         }

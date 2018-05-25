@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface IFirebasePersistence {
 
-    public void addUser(String username, User admin);//add data to the firebase
+    public boolean addUser(User user);//add data to the firebase
 
     public User getUser(String username);// get data from firebase with id
     

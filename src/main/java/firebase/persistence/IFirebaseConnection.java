@@ -9,7 +9,7 @@ package firebase.persistence;
  *
  * @author Mk
  */
-public interface IFirebaseConection {
+public interface IFirebaseConnection {
        public void initFirebase(String link, String path);
 }
 

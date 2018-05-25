@@ -5,10 +5,10 @@
  */
 package persistence.demo;
 
-import firebase.persistence.IFirebaseConection;
 import firebase.persistence.IFirebasePersistence;
 import pesistence.implementation.FirebaseConectionImp;
 import pesistence.implementation.FirebasePersistence;
+import firebase.persistence.IFirebaseConnection;
 
 /**
  *
@@ -18,8 +18,8 @@ public class DemoFirebaseDelete {
     public static void main(String[] args) {
              //calling for the firebase connection and the json file that we get from the firebase
         String link = "https://finaleapp-dcad7.firebaseio.com";
-String path = "C:\\\\Users\\\\MoK\\\\Documents\\\\NetBeansProjects\\\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
-       IFirebaseConection IFC = new FirebaseConectionImp();
+String path = "C:\\Users\\Lasse Andersen\\Documents\\NetBeansProjects\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+       IFirebaseConnection IFC = new FirebaseConectionImp();
       IFC.initFirebase(link,path);
         
       //calling the method from firebasepersistence using the ifriebasepersistence and calling the child by the childname.
