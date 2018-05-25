@@ -28,7 +28,6 @@ public interface IFirebasePersistence {
     
     public User editUser(User admin); 
    
-    public List<User> getUserd();
     
     
 

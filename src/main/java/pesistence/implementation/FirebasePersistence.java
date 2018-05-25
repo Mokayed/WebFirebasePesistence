@@ -121,11 +121,7 @@ public class FirebasePersistence implements IFirebasePersistence {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public List<User> getUserd() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-    }
+ 
 
     private class ValueEListnerImpl implements ValueEventListener {
 
@@ -140,10 +136,10 @@ public class FirebasePersistence implements IFirebasePersistence {
             /* if (adminInfo == null) {
                 System.out.println("Ingen bruger findes");
             } else {
-                //System.out.println(adminInfo.toString());
+                
 
+            } */System.out.println(adminInfo.toString());
 
-            } */
             countDownLatch.countDown();
 
         }

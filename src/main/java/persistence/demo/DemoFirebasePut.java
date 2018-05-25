@@ -21,7 +21,7 @@ public class DemoFirebasePut {
 
     public static void main(String[] args) throws IOException {
         String link = "https://finaleapp-dcad7.firebaseio.com";
-        String path = "C:\\Users\\Lasse Andersen\\Documents\\NetBeansProjects\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+        String path = "C:\\Users\\Mk\\Documents\\NetBeansProjects\\Firebase\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
 
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);

@@ -25,13 +25,13 @@ public class DemoFirebaseGet {
 
         //calling for the firebase connection and the json file that we get from the firebase
         String link = "https://finaleapp-dcad7.firebaseio.com";
-        String path = "C:\\Users\\Lasse Andersen\\Documents\\NetBeansProjects\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+        String path = "C:\\Users\\Mk\\Documents\\NetBeansProjects\\Firebase\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
 
         //calling the method from firebasepersistence using the ifriebasepersistence and calling the child by the childname.
         IFirebasePersistence firebase = new FirebasePersistence();
-        firebase.getUser("hm5");
+        firebase.getUser("hm1");
 
     }
 }

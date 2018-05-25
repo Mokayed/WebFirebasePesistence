@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html style=" height: 100%">
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/png" href="favicon.png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="css.css">
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+
+
+            <tr>
+                <td width="100%">
+                    <!--  Header Section Starts Here  -->
+                    <table border="0" width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="100%">
+                                <div id="Header">
+                                    <div>
+                                        <a><img src="resources/bus.png" width="200" height="90" border="0" alt="SIMS" title="SIMS"></a>
+
+                                    </div>
+                                    <div  id="Welcome">
+                                        <table border="0" cellpadding="0" cellspacing="0" align="right">
+                                            <tr>
+                                                <td>
+                                                    <div id="authors" style=" color: orange" >Group members: Murched Kayed,Lasse Andersen </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> 
+                                                    <div id="class" style=" color: orange">Class: DAT</div>
+                                                <td>
+                                            </tr>
+                                            <tr>
+                                                <td> 
+                                                    <div id= "group" style=" color: orange">Advanced programming Spring 2018</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="http://localhost:8084//Firebasewebpesistence//doc.html" target="_blank"><h4>Click Me For Documentation</h4></a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <div class="jumbotron">
+
+                        <button id="addNewUserBtn"  class="btn btn-success"  data-toggle="modal" data-target="#addUserModal">Add a new User!</button>
+
+                        <br><br>
+                        <br><br>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="text" id="userNameId" class="form-control"/>
+                                <button id="findByUsernameBtn" class="btn btn-warning">Get person by username</button>
+                                <button id="deleteByUsernameBtn" class="btn-danger">Delete user by username</button>
+
+                            </div>
+                            <br><br><br><br>
+                            <table class="table table-bordered" id="tId">
+
+                            </table>
+                        </div>
+                    </div>
+
+
+
+        </div>
+        <!-- Modal add person-->
+        <div class="modal fade" id="addUserModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add a new user...</h4>
+                    </div>
+                    <div class="modal-body">                        
+                        <div class="form-group">
+
+                            <label for="address"> Address : </label>
+                            <input type="text" id="address" class="form-control" required/>
+
+                            <label for="latitude">Latitude : </label>
+                            <input type="number" id="latitude" class="form-control" required/>
+
+                            <label for="longitude">Longitude : </label>
+                            <input type="number" id="longitude" class="form-control" required/> 
+
+                            <label for="password">Password : </label>
+                            <input type="password" id="password" class="form-control" required/>      
+
+                            <label for="role">role: </label>
+                            <input type="text" id="role" class="form-control" required/>    
+
+                            <label for="title">Title: </label>
+                            <input type="text" id="title" class="form-control" required/>                                    
+
+                            <label for="username">Username: </label>
+                            <input type="text" id="username" class="form-control" required/>    
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-inline">
+                                <button id="addUserBtn" type="submit" class="btn btn-success" data-dismiss="modal">Add new user</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="app.js"></script>
     </body>
 </html>

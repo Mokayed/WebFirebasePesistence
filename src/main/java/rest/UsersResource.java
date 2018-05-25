@@ -37,7 +37,7 @@ public class UsersResource {
     @Context
     private UriInfo context;
     private String link = "https://finaleapp-dcad7.firebaseio.com";
-    private String path = "C:\\Users\\Lasse Andersen\\Documents\\NetBeansProjects\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+    private String path = "C:\\Users\\Mk\\Documents\\NetBeansProjects\\Firebase\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -47,7 +47,7 @@ public class UsersResource {
 
     }
 
-    @Path("getuser/{userName}")
+    @Path("getUser/{userName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJson(@PathParam("userName") String userName) {
@@ -88,14 +88,6 @@ public class UsersResource {
         }
         return Response.status(Response.Status.CONFLICT).build();
 
-        //IFirebaseConection IFC = new FirebaseConectionImp();
-        //IFC.initFirebase(link, path);
-        //IFirebasePersistence firebase = new FirebasePersistence();
-        //User pd = gson.fromJson(entity, User.class);
-        //return Response
-        // .status(Response.Status.CREATED)
-        //.entity(gson.toJson(pd))
-        //.build();
     }
 
     /*
