@@ -94,10 +94,27 @@ public class FirebasePersistence implements IFirebasePersistence {
     }
 
     @Override
-    public String deleteUser(String username) {
-        boolean deleteChecker = false;
-        if (username != null) {
-            DatabaseReference childReference = database.getReference("users").child(username);
+    public String deleteUser(String userName) {
+        /* 
+        
+    public User deleteUser(String name) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            User p = em.find(User.class, name);
+            em.remove(p);
+            em.getTransaction().commit();
+            return p;
+        } finally {
+            em.close();
+        }
+    }
+
+        */
+       // User testUser = getUser(user.getUsername());
+
+            DatabaseReference childReference = database.getReference("users").child(userName);
             childReference.removeValue();
             try {
                 countDownLatch.await();
@@ -107,19 +124,12 @@ public class FirebasePersistence implements IFirebasePersistence {
                         .getName()).log(Level.SEVERE, null, ex);
             }
             countDownLatch.countDown();
-            deleteChecker = true;
-        }
-        if (deleteChecker == false) {
-            System.out.println("no user by that username found");
-        }
-        return username + " " + "is deleted!";
+        return userName + "is deleted";
+
+
 
     }
 
-    @Override
-    public User editUser(User admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
  
 
@@ -138,7 +148,7 @@ public class FirebasePersistence implements IFirebasePersistence {
             } else {
                 
 
-            } */System.out.println(adminInfo.toString());
+            } *///System.out.println(adminInfo.toString());
 
             countDownLatch.countDown();
 

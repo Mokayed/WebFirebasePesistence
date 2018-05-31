@@ -26,7 +26,7 @@ public interface IFirebasePersistence {
     
     public String deleteUser(String username);
     
-    public User editUser(User admin); 
+
    
     
     

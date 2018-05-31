@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package rest;
-
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -37,7 +38,7 @@ public class UsersResource {
     @Context
     private UriInfo context;
     private String link = "https://finaleapp-dcad7.firebaseio.com";
-    private String path = "C:\\Users\\Mk\\Documents\\NetBeansProjects\\Firebase\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+    private String path = "C:\\\\Users\\\\MoK\\\\Documents\\\\NetBeansProjects\\\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -90,7 +91,7 @@ public class UsersResource {
 
     }
 
-    /*
+    
     @DELETE
     @Path("delete/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -98,11 +99,7 @@ public class UsersResource {
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
         IFirebasePersistence firebase = new FirebasePersistence();
-
-        return Response
-                .status(Response.Status.OK)
-                .entity(gson.toJson(firebase.deleteUser(userId)))
-                .build();
+        return  Response.ok(gson.toJson(firebase.deleteUser(userId))).build();
     }
-     */
+     
 }

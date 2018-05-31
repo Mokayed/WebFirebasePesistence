@@ -56,7 +56,7 @@ function genSingleUserTable(user) {
 
 
 function addNewUser() {
-    var personObject = {
+    var userObject = {
         "address": document.getElementById("address").value,
         "latitude": document.getElementById("latitude").value,
         "longitude": document.getElementById("longitude").value,
@@ -72,13 +72,14 @@ function addNewUser() {
     var promise = fetch("api/users/addUser", {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify(personObject)
+        body: JSON.stringify(userObject)
     });
 
     promise
-            .then(handleErrors)
-            .then(function (user) {
-                document.getElementById("tId").innerHTML = genSingleUserTable(user);
+
+            .then(function () {
+                document.getElementById("tId").innerHTML = genSingleUserTable(userObject);
+        alert(userObject.username + "is been added!");
             })
             .catch(function (error) {
                 return error.json();
@@ -86,5 +87,28 @@ function addNewUser() {
 }
 
 
+
+function deleteUserwithuserName() {
+    var userName = document.getElementById("userNameId").value;
+    if (userName === "") {
+        alert("You need to type in a username");
+    } else {
+        var myHeaders = new Headers;
+        myHeaders.set("Content-Type", "application/json");
+        var promise = fetch("api/users/delete/" + userName,
+                {
+                    method: "DELETE",
+                    headers: myHeaders
+                });
+        promise.then(handleErrors).then( 
+             alert(userName+" "+"is been deleted!")
+        ).catch(function (error) {
+            return error.json();
+        }).then(errorMessage);
+    }
+}
+
+
 document.getElementById("addUserBtn").addEventListener("click", addNewUser);
 document.getElementById("findByUsernameBtn").addEventListener("click", getUserWithuserName);
+document.getElementById("deleteByUsernameBtn").addEventListener("click", deleteUserwithuserName);
