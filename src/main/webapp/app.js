@@ -75,7 +75,7 @@ function addNewUser() {
 
             .then(function () {
                 document.getElementById("tId").innerHTML = genSingleUserTable(userObject);
-                alert(userObject.username + "is been added!");
+                alert(userObject.username +" "+"is been added!");
             })
             .catch(function (error) {
                 return error.json();

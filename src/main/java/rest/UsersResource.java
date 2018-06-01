@@ -40,7 +40,7 @@ public class UsersResource {
     @Context
     private UriInfo context;
     private String link = "https://finaleapp-dcad7.firebaseio.com";
-    private String path = "C:\\Users\\Lasse Andersen\\Desktop\\Cph Business\\4.Semester (Valgfag)\\Advanced Programming\\WebFirebasePesistence\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+    private String path = "C:\\\\Users\\\\MoK\\\\Documents\\\\NetBeansProjects\\\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
