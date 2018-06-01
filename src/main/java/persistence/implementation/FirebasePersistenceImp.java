@@ -1,48 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pesistence.implementation;
+package persistence.implementation;
 
-/**
- *
- * @author Mk
- */
-import entity.User;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+import object.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseReference.CompletionListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.concurrent.CountDownLatch;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import firebase.persistence.IFirebaseConnection;
-import firebase.persistence.IUserPersistence;
+import interfaces.IUserPersistence;
 
-/**
- *
- * @author MoK
- */
-public class FirebasePersistence implements IUserPersistence {
+public class FirebasePersistenceImp implements IUserPersistence {
 
     private CountDownLatch countDownLatch = new CountDownLatch(1);//thread call
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference childReference;
     private DatabaseReference databaseReference;
+    private ValueEListnerImpl listener;
 
-    public FirebasePersistence() {
+    public FirebasePersistenceImp() {
 
     }
 
@@ -77,7 +57,7 @@ public class FirebasePersistence implements IUserPersistence {
 
         childReference = database.getReference("users").child(username);
 
-        ValueEListnerImpl listener = new ValueEListnerImpl();
+        listener = new ValueEListnerImpl();
         childReference.addValueEventListener(listener);
 
         try {
@@ -85,29 +65,33 @@ public class FirebasePersistence implements IUserPersistence {
             //z countDownLatch.await(1, TimeUnit.SECONDS);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(FirebasePersistence.class
+            Logger.getLogger(FirebasePersistenceImp.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        User admin = listener.getAdmin();
+        User user = listener.getUser();
         //System.out.println(admin.toString());
-        return admin;
+        return user;
 
     }
 
     @Override
-    public String deleteUser(String userName) {
+    public User deleteUser(String userName) {
+
         childReference = database.getReference("users").child(userName);
+        User user = getUser(userName);
         childReference.removeValue();
+        listener = new ValueEListnerImpl();
         try {
             countDownLatch.await();
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(FirebasePersistence.class
+            Logger.getLogger(FirebasePersistenceImp.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         countDownLatch.countDown();
-        return userName + "is deleted";
+
+        return user;
 
     }
 
@@ -150,14 +134,14 @@ public class FirebasePersistence implements IUserPersistence {
 
     private class ValueEListnerImpl implements ValueEventListener {
 
-        private User adminInfo;
+        private User user;
 
         public ValueEListnerImpl() {
         }
 
         @Override
         public void onDataChange(DataSnapshot ds) {
-            adminInfo = ds.getValue(User.class);
+            user = ds.getValue(User.class);
             /* if (adminInfo == null) {
                 System.out.println("Ingen bruger findes");
             } else {
@@ -173,8 +157,8 @@ public class FirebasePersistence implements IUserPersistence {
             System.out.println("The read failed: " + de.getCode());
         }
 
-        private User getAdmin() {
-            return adminInfo;
+        private User getUser() {
+            return user;
         }
 
     }

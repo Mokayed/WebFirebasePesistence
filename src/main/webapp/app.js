@@ -75,7 +75,7 @@ function addNewUser() {
 
             .then(function () {
                 document.getElementById("tId").innerHTML = genSingleUserTable(userObject);
-                alert(userObject.username +" "+"is been added!");
+                alert(userObject.username + " " + "is been added!");
             })
             .catch(function (error) {
                 return error.json();
@@ -96,9 +96,9 @@ function deleteUserwithuserName() {
                     method: "DELETE",
                     headers: myHeaders
                 });
-        promise.then(handleErrors).then(
-                alert(userName + " " + "is been deleted!")
-                ).catch(function (error) {
+        promise.then(handleErrors).then(function (user) {
+            document.getElementById("tId").innerHTML = genSingleUserTable(user);
+        }).catch(function (error) {
             return error.json();
         }).then(errorMessage);
     }

@@ -1,29 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pesistence.implementation;
+package persistence.implementation;
 
-/**
- *
- * @author Mk
- */
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.FirebaseDatabase;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
-import firebase.persistence.IFirebaseConnection;
+import interfaces.IFirebaseConnection;
 
-/**
- *
- * @author MoK
- */
 //making a connection to the needed firebase using Ifirebaseconnection interface.
-public class FirebaseConectionImp implements IFirebaseConnection {
+public class FirebaseConnectionImp implements IFirebaseConnection {
 
     @Override
     public void initFirebase(String link, String path) {
@@ -33,7 +19,7 @@ public class FirebaseConectionImp implements IFirebaseConnection {
                     .setDatabaseUrl(link)
                     .setServiceAccount(new FileInputStream(new File(path)))
                     .build();
-//heck whether the default app is initialized or not 
+            //Check whether the default app is initialized or not 
             List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
             if (firebaseApps != null && !firebaseApps.isEmpty()) {
                 for (FirebaseApp app : firebaseApps) {
