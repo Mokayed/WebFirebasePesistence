@@ -12,8 +12,6 @@ import java.util.List;
  *
  * @author Mk
  */
-
-
 /**
  *
  * @author MoK
@@ -23,12 +21,9 @@ public interface IFirebasePersistence {
     public boolean addUser(User user);//add data to the firebase
 
     public User getUser(String username);// get data from firebase with id
-    
-    public String deleteUser(String username);
-    
 
-   
-    
-    
+    public String deleteUser(String username);
+
+    public List<User> getAllUsers();
 
 }

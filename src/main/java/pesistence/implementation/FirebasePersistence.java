@@ -37,8 +37,10 @@ import firebase.persistence.IFirebaseConnection;
  */
 public class FirebasePersistence implements IFirebasePersistence {
 
-    CountDownLatch countDownLatch = new CountDownLatch(1);//thread call
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private CountDownLatch countDownLatch = new CountDownLatch(1);//thread call
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference childReference;
+    private DatabaseReference databaseReference;
 
     public FirebasePersistence() {
 
@@ -73,7 +75,7 @@ public class FirebasePersistence implements IFirebasePersistence {
     @Override
     public User getUser(String username) {
 
-        DatabaseReference childReference = database.getReference("users").child(username);
+        childReference = database.getReference("users").child(username);
 
         ValueEListnerImpl listener = new ValueEListnerImpl();
         childReference.addValueEventListener(listener);
@@ -88,50 +90,63 @@ public class FirebasePersistence implements IFirebasePersistence {
         }
 
         User admin = listener.getAdmin();
-
+        //System.out.println(admin.toString());
         return admin;
 
     }
 
     @Override
     public String deleteUser(String userName) {
-        /* 
-        
-    public User deleteUser(String name) {
-        EntityManager em = emf.createEntityManager();
-
+        childReference = database.getReference("users").child(userName);
+        childReference.removeValue();
         try {
-            em.getTransaction().begin();
-            User p = em.find(User.class, name);
-            em.remove(p);
-            em.getTransaction().commit();
-            return p;
-        } finally {
-            em.close();
+            countDownLatch.await();
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FirebasePersistence.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-        */
-       // User testUser = getUser(user.getUsername());
-
-            DatabaseReference childReference = database.getReference("users").child(userName);
-            childReference.removeValue();
-            try {
-                countDownLatch.await();
-
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FirebasePersistence.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
-            countDownLatch.countDown();
+        countDownLatch.countDown();
         return userName + "is deleted";
 
-
-
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        List<User> allUsers = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference("/");
+        childReference = databaseReference.child("users");
 
- 
+        childReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                for (DataSnapshot child : ds.getChildren()) {
+                    allUsers.add(child.getValue(User.class));
+                    /* allUsers.add(new User(
+                            child.child("address").getValue().toString(),
+                            Double.parseDouble(child.child("latitude").getValue().toString()),
+                            Double.parseDouble(child.child("longitude").getValue().toString()),
+                            child.child("password").getValue().toString(),
+                            child.child("role").getValue().toString(),
+                            child.child("title").getValue().toString(),
+                            child.child("username").getValue().toString()
+                    ));*/
+                }
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError de) {
+                de.getMessage();
+            }
+        });
+        try {
+            countDownLatch.await();
+        } catch (Exception e) {
+
+        }
+        return allUsers;
+    }
 
     private class ValueEListnerImpl implements ValueEventListener {
 
@@ -148,8 +163,7 @@ public class FirebasePersistence implements IFirebasePersistence {
             } else {
                 
 
-            } *///System.out.println(adminInfo.toString());
-
+            } */
             countDownLatch.countDown();
 
         }

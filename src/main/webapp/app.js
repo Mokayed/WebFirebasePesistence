@@ -51,10 +51,6 @@ function genSingleUserTable(user) {
 }
 
 
-
-
-
-
 function addNewUser() {
     var userObject = {
         "address": document.getElementById("address").value,
@@ -79,7 +75,7 @@ function addNewUser() {
 
             .then(function () {
                 document.getElementById("tId").innerHTML = genSingleUserTable(userObject);
-        alert(userObject.username + "is been added!");
+                alert(userObject.username + "is been added!");
             })
             .catch(function (error) {
                 return error.json();
@@ -100,15 +96,49 @@ function deleteUserwithuserName() {
                     method: "DELETE",
                     headers: myHeaders
                 });
-        promise.then(handleErrors).then( 
-             alert(userName+" "+"is been deleted!")
-        ).catch(function (error) {
+        promise.then(handleErrors).then(
+                alert(userName + " " + "is been deleted!")
+                ).catch(function (error) {
             return error.json();
         }).then(errorMessage);
     }
 }
 
+function getAllUsers() {
+    var myHeaders = new Headers;
+    myHeaders.set("Content-Type", "application/json");
+    var promise = fetch("api/users/getAllUsers",
+            {
+                method: "GET",
+                headers: myHeaders
+            });
+    promise.then(handleErrors).then(function (user) {
+        document.getElementById("tId").innerHTML = mapAllUsersList(user);
+        console.log(user);
+    }).catch(function (error) {
+        return error.json();
+    }).then(errorMessage);
+}
+function mapAllUsersList(users) {
 
+    var htmlStr = "<thead><th>Address</th><th>Latitude</th><th>Longitude</th><th>Password</th><th>Role</th><th>Title</th><th>Username</th></thead>";
+    htmlStr += users.map(user => {
+        return  ""
+                + "<tr><td>" + user.address
+                + "</td><td>" + user.latitude
+                + "</td><td>" + user.longitude
+                + "</td><td>" + user.password
+                + "</td><td>" + user.role
+                + "</td><td>" + user.title
+                + "</td><td>" + user.username
+                + "</td></tr>";
+    }).join("");
+    console.log(htmlStr);
+    //htmlStr += ;
+    return htmlStr;
+}
+
+document.getElementById("getAllUsersBtn").addEventListener("click", getAllUsers);
 document.getElementById("addUserBtn").addEventListener("click", addNewUser);
 document.getElementById("findByUsernameBtn").addEventListener("click", getUserWithuserName);
 document.getElementById("deleteByUsernameBtn").addEventListener("click", deleteUserwithuserName);

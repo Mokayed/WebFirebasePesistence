@@ -1,4 +1,5 @@
 package entity;
+
 /**
  *
  * @author MoK
@@ -6,8 +7,8 @@ package entity;
 public class User {
 
     private String address;
-    private long latitude;
-    private long longitude;
+    private Double latitude;
+    private Double longitude;
     private String password;
     private String role;
     private String username;
@@ -16,7 +17,7 @@ public class User {
     public User() {
     }
 
-    public User(String address, long latitude, long longitude, String password, String role, String username, String title) {
+    public User(String address, Double latitude, Double longitude, String password, String role, String username, String title) {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -26,44 +27,41 @@ public class User {
         this.title = title;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-
-
-    public long getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
-    public long getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
+    public String getAddress() {
+        return address;
+    }
 
     public String getPassword() {
         return password;
     }
 
-  
-
     public String getRole() {
         return role;
     }
-
 
     public String getUsername() {
         return username;
     }
 
-    
-
     public String getTitle() {
         return title;
     }
-
 
     @Override
     public String toString() {

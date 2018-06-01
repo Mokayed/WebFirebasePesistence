@@ -27,7 +27,7 @@ public class DemoFirebasePut {
         IFC.initFirebase(link, path);
 
         //Husk at username skal være det samme som hm3 hvis det er det man vælger, ellers går det galt i tilbud i android
-        User user = new User("ged", 0, 33, "mo123", "admin", "hm7", "cool mo");
+        User user = new User("ged", 0.333, 33.3, "mo123", "admin", "hm7", "cool mo");
         IFirebasePersistence firebasestorage = new FirebasePersistence();
         boolean succeed = firebasestorage.addUser(user);
         System.out.println(succeed);

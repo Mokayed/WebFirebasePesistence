@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package rest;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javax.ws.rs.core.Context;
@@ -26,6 +27,7 @@ import firebase.persistence.IFirebasePersistence;
 import pesistence.implementation.FirebaseConectionImp;
 import pesistence.implementation.FirebasePersistence;
 import firebase.persistence.IFirebaseConnection;
+import java.util.List;
 
 /**
  * REST Web Service
@@ -38,7 +40,7 @@ public class UsersResource {
     @Context
     private UriInfo context;
     private String link = "https://finaleapp-dcad7.firebaseio.com";
-    private String path = "C:\\\\Users\\\\MoK\\\\Documents\\\\NetBeansProjects\\\\Firebase\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+    private String path = "C:\\Users\\Lasse Andersen\\Desktop\\Cph Business\\4.Semester (Valgfag)\\Advanced Programming\\WebFirebasePesistence\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -61,14 +63,6 @@ public class UsersResource {
                 .build();
     }
 
-    @Path("ged")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getBob() {
-        return "GED";
-    }
- 
-    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {
@@ -91,7 +85,6 @@ public class UsersResource {
 
     }
 
-    
     @DELETE
     @Path("delete/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -99,7 +92,25 @@ public class UsersResource {
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
         IFirebasePersistence firebase = new FirebasePersistence();
-        return  Response.ok(gson.toJson(firebase.deleteUser(userId))).build();
+        return Response.ok(gson.toJson(firebase.deleteUser(userId))).build();
     }
-     
+
+    @Path("getAllUsers")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsers() {
+
+        IFirebaseConnection IFC = new FirebaseConectionImp();
+        IFC.initFirebase(link, path);
+        IFirebasePersistence firebase = new FirebasePersistence();
+        //Putting all users from firebase into a new List
+        List<User> allUsers = firebase.getAllUsers();
+        // Returns a Response 
+        return Response
+                .status(200)
+                .entity(gson.toJson(allUsers))
+                .build();
+
+    }
+
 }
