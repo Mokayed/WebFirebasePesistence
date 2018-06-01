@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author MoK
  */
-public interface IFirebasePersistence {
+public interface IUserPersistence {
 
     public boolean addUser(User user);//add data to the firebase
 

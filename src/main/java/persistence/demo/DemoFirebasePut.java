@@ -12,10 +12,10 @@ package persistence.demo;
 import entity.User;
 import java.io.IOException;
 import java.util.Date;
-import firebase.persistence.IFirebasePersistence;
 import pesistence.implementation.FirebaseConectionImp;
 import pesistence.implementation.FirebasePersistence;
 import firebase.persistence.IFirebaseConnection;
+import firebase.persistence.IUserPersistence;
 
 public class DemoFirebasePut {
 
@@ -28,7 +28,7 @@ public class DemoFirebasePut {
 
         //Husk at username skal være det samme som hm3 hvis det er det man vælger, ellers går det galt i tilbud i android
         User user = new User("ged", 0.333, 33.3, "mo123", "admin", "hm7", "cool mo");
-        IFirebasePersistence firebasestorage = new FirebasePersistence();
+        IUserPersistence firebasestorage = new FirebasePersistence();
         boolean succeed = firebasestorage.addUser(user);
         System.out.println(succeed);
 

@@ -18,12 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseReference.CompletionListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import firebase.persistence.ICompletionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.concurrent.CountDownLatch;
-import firebase.persistence.IFirebasePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
@@ -31,13 +29,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import firebase.persistence.IFirebaseConnection;
-import firebase.persistence.IValueListner;
+import firebase.persistence.IUserPersistence;
 
 /**
  *
  * @author MoK
  */
-public class FirebasePersistence implements IFirebasePersistence {
+public class FirebasePersistence implements IUserPersistence {
 
     private CountDownLatch countDownLatch = new CountDownLatch(1);//thread call
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -150,7 +148,7 @@ public class FirebasePersistence implements IFirebasePersistence {
         return allUsers;
     }
 
-    private class ValueEListnerImpl implements IValueListner {
+    private class ValueEListnerImpl implements ValueEventListener {
 
         private User adminInfo;
 
@@ -181,7 +179,7 @@ public class FirebasePersistence implements IFirebasePersistence {
 
     }
 
-    private class CompletionListenerImpl implements ICompletionListener {
+    private class CompletionListenerImpl implements CompletionListener {
 
         public CompletionListenerImpl() {
         }

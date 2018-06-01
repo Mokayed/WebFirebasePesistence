@@ -9,11 +9,11 @@ package persistence.demo;
  *
  * @author Mk
  */
-import firebase.persistence.IFirebasePersistence;
 import java.io.IOException;
 import pesistence.implementation.FirebaseConectionImp;
 import pesistence.implementation.FirebasePersistence;
 import firebase.persistence.IFirebaseConnection;
+import firebase.persistence.IUserPersistence;
 
 /**
  *
@@ -30,7 +30,7 @@ public class DemoFirebaseGet {
         IFC.initFirebase(link, path);
 
         //calling the method from firebasepersistence using the ifriebasepersistence and calling the child by the childname.
-        IFirebasePersistence firebase = new FirebasePersistence();
+        IUserPersistence firebase = new FirebasePersistence();
         firebase.getUser("hm1");
 
     }

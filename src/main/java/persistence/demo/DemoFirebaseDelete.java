@@ -5,10 +5,10 @@
  */
 package persistence.demo;
 
-import firebase.persistence.IFirebasePersistence;
 import pesistence.implementation.FirebaseConectionImp;
 import pesistence.implementation.FirebasePersistence;
 import firebase.persistence.IFirebaseConnection;
+import firebase.persistence.IUserPersistence;
 
 /**
  *
@@ -23,7 +23,7 @@ String path = "C:\\\\Users\\\\MoK\\\\Documents\\\\NetBeansProjects\\\\Firebase\\
       IFC.initFirebase(link,path);
         
       //calling the method from firebasepersistence using the ifriebasepersistence and calling the child by the childname.
-        IFirebasePersistence firebase = new FirebasePersistence();
+        IUserPersistence firebase = new FirebasePersistence();
         firebase.deleteUser("hm7");
     }
     

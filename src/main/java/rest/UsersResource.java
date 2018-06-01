@@ -23,11 +23,11 @@ import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entity.User;
-import firebase.persistence.IFirebasePersistence;
 import pesistence.implementation.FirebaseConectionImp;
 import pesistence.implementation.FirebasePersistence;
 import firebase.persistence.IFirebaseConnection;
 import java.util.List;
+import firebase.persistence.IUserPersistence;
 
 /**
  * REST Web Service
@@ -56,7 +56,7 @@ public class UsersResource {
     public Response getJson(@PathParam("userName") String userName) {
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
-        IFirebasePersistence firebase = new FirebasePersistence();
+        IUserPersistence firebase = new FirebasePersistence();
         return Response
                 .status(200)
                 .entity(gson.toJson(firebase.getUser(userName)))
@@ -76,7 +76,7 @@ public class UsersResource {
         User user = gson.fromJson(entity, User.class);
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
-        IFirebasePersistence fireBase = new FirebasePersistence();
+        IUserPersistence fireBase = new FirebasePersistence();
         boolean success = fireBase.addUser(user);
         if (success == true) {
             return Response.status(Response.Status.CREATED).build();
@@ -91,7 +91,7 @@ public class UsersResource {
     public Response deletePerson(@PathParam("userId") String userId) {
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
-        IFirebasePersistence firebase = new FirebasePersistence();
+        IUserPersistence firebase = new FirebasePersistence();
         return Response.ok(gson.toJson(firebase.deleteUser(userId))).build();
     }
 
@@ -102,7 +102,7 @@ public class UsersResource {
 
         IFirebaseConnection IFC = new FirebaseConectionImp();
         IFC.initFirebase(link, path);
-        IFirebasePersistence firebase = new FirebasePersistence();
+        IUserPersistence firebase = new FirebasePersistence();
         //Putting all users from firebase into a new List
         List<User> allUsers = firebase.getAllUsers();
         // Returns a Response 
