@@ -1,14 +1,16 @@
 package object;
 
+import interfaces.IUser;
+
 /**
  *
  * @author MoK
  */
-public class User {
+public class User implements IUser {
 
     private String address;
-    private Double latitude;
-    private Double longitude;
+    private double latitude;
+    private double longitude;
     private String password;
     private String role;
     private String username;
@@ -27,7 +29,8 @@ public class User {
         this.title = title;
     }
 
-    public Double getLatitude() {
+    @Override
+    public double getLatitude() {
         return latitude;
     }
 
@@ -35,7 +38,8 @@ public class User {
         this.latitude = latitude;
     }
 
-    public Double getLongitude() {
+    @Override
+    public double getLongitude() {
         return longitude;
     }
 
@@ -43,22 +47,27 @@ public class User {
         this.longitude = longitude;
     }
 
+    @Override
     public String getAddress() {
         return address;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
+    @Override
     public String getRole() {
         return role;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }

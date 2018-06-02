@@ -10,7 +10,8 @@ function handleErrors(response) {
 function errorMessage(errorJson) {
     if (errorJson !== undefined) {
         message = errorJson.message;
-        alert(message);
+        //alert(message);
+        alert("The username doesn't exist")
     }
 }
 function getUserWithuserName() {
@@ -79,7 +80,9 @@ function addNewUser() {
             })
             .catch(function (error) {
                 return error.json();
-            }).then(errorMessage);
+            }).then(function () {
+
+    });
 }
 
 

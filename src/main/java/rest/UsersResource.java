@@ -19,12 +19,12 @@ import object.User;
 import persistence.implementation.FirebaseConnectionImp;
 import persistence.implementation.FirebasePersistenceImp;
 import interfaces.IFirebaseConnection;
+import interfaces.IUser;
 import java.util.List;
 import interfaces.IUserPersistence;
 import interfaces.IUserResource;
 
 // We implements IUserResource Interface. 
-
 @Path("users")
 public class UsersResource implements IUserResource {
 
@@ -66,7 +66,7 @@ public class UsersResource implements IUserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response addUser(String entity) {
-        User user = gson.fromJson(entity, User.class);
+        IUser user = gson.fromJson(entity, User.class);
         IFirebaseConnection IFC = new FirebaseConnectionImp();
         IFC.initFirebase(link, path);
         IUserPersistence fireBase = new FirebasePersistenceImp();
@@ -83,10 +83,16 @@ public class UsersResource implements IUserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response deleteUser(@PathParam("userId") String userId) {
+        String notFound = "NOT FOUND";
         IFirebaseConnection IFC = new FirebaseConnectionImp();
         IFC.initFirebase(link, path);
         IUserPersistence firebase = new FirebasePersistenceImp();
-        return Response.ok(gson.toJson(firebase.deleteUser(userId))).build();
+        IUser user = firebase.deleteUser(userId);
+        if (user == null) {
+            //Returns a string with notFound 
+            return Response.status(Response.Status.NOT_FOUND).entity(gson.toJson(notFound)).build();
+        }
+        return Response.ok(gson.toJson(user)).build();
     }
 
     @Path("getAllUsers")
@@ -98,7 +104,7 @@ public class UsersResource implements IUserResource {
         IFC.initFirebase(link, path);
         IUserPersistence firebase = new FirebasePersistenceImp();
         //Putting all users from firebase into a new List
-        List<User> allUsers = firebase.getAllUsers();
+        List<IUser> allUsers = firebase.getAllUsers();
         // Returns a Response 
         return Response
                 .status(200)

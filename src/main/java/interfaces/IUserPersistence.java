@@ -11,12 +11,12 @@ public interface IUserPersistence {
 
     /**
      *
-     * @param user The User object is a object class which contains the same
-     * data as the data we want to save and retrieve from Firebase
+     * @param user The IUser interface is a interface which contains the
+     * required method we want to save and retrieve from Firebase
      * @return Return a boolean with true if the User is saved in the Firebase
      * Database.
      */
-    public boolean addUser(User user);//add data to the firebase
+    public boolean addUser(IUser user);//add data to the firebase
 
     /**
      *
@@ -24,7 +24,7 @@ public interface IUserPersistence {
      * from Firebase
      * @return Returns the whole User object with the chosen username
      */
-    public User getUser(String username);// get data from firebase with id
+    public IUser getUser(String username);// get data from firebase with id
 
     /**
      *
@@ -32,13 +32,13 @@ public interface IUserPersistence {
      * from Firebase
      * @return Return
      */
-    public User deleteUser(String username);
+    public IUser deleteUser(String username);
 
     /**
      *
      * @return The list with the User object, will return all the users in a
      * list from Firebase
      */
-    public List<User> getAllUsers();
+    public List<IUser> getAllUsers();
 
 }

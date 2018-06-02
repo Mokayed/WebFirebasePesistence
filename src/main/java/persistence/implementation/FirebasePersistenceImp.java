@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.DatabaseReference.CompletionListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import interfaces.IUser;
 import java.util.concurrent.CountDownLatch;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,11 @@ public class FirebasePersistenceImp implements IUserPersistence {
 // (implementation of IFirebasePersistnce interface)puting data in the firebase using the put frim the Ifirebasepersistence
     //+ the inner class CompletionListenerImp
     @Override
-    public boolean addUser(User user) {
+    public boolean addUser(IUser user) {
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("/");
-        DatabaseReference childReference = databaseReference.child("users").child(user.getUsername());
-        User testUser = getUser(user.getUsername());
+        databaseReference = FirebaseDatabase.getInstance().getReference("/");
+        childReference = databaseReference.child("users").child(user.getUsername());
+        IUser testUser = getUser(user.getUsername());
         if (testUser == null) {
 
             //if (childReference != null) {
@@ -53,7 +54,7 @@ public class FirebasePersistenceImp implements IUserPersistence {
 //(implementation of IFirebasePersistnce interface) geting data from firebase using the get from the ifirebase interface 
 //+ the inner class valuelistenermip
     @Override
-    public User getUser(String username) {
+    public IUser getUser(String username) {
 
         childReference = database.getReference("users").child(username);
 
@@ -69,17 +70,17 @@ public class FirebasePersistenceImp implements IUserPersistence {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        User user = listener.getUser();
+        IUser user = listener.getUser();
         //System.out.println(admin.toString());
         return user;
 
     }
 
     @Override
-    public User deleteUser(String userName) {
+    public IUser deleteUser(String userName) {
 
         childReference = database.getReference("users").child(userName);
-        User user = getUser(userName);
+        IUser user = getUser(userName);
         childReference.removeValue();
         listener = new ValueEListnerImpl();
         try {
@@ -96,8 +97,8 @@ public class FirebasePersistenceImp implements IUserPersistence {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        List<User> allUsers = new ArrayList<>();
+    public List<IUser> getAllUsers() {
+        List<IUser> allUsers = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("/");
         childReference = databaseReference.child("users");
 
@@ -134,7 +135,7 @@ public class FirebasePersistenceImp implements IUserPersistence {
 
     private class ValueEListnerImpl implements ValueEventListener {
 
-        private User user;
+        private IUser user;
 
         public ValueEListnerImpl() {
         }
@@ -145,8 +146,6 @@ public class FirebasePersistenceImp implements IUserPersistence {
             /* if (adminInfo == null) {
                 System.out.println("Ingen bruger findes");
             } else {
-                
-
             } */
             countDownLatch.countDown();
 
@@ -157,7 +156,7 @@ public class FirebasePersistenceImp implements IUserPersistence {
             System.out.println("The read failed: " + de.getCode());
         }
 
-        private User getUser() {
+        private IUser getUser() {
             return user;
         }
 
