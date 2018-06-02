@@ -31,7 +31,7 @@ public class UsersResource implements IUserResource {
     @Context
     private UriInfo context;
     private String link = "https://finaleapp-dcad7.firebaseio.com";
-    private String path = "C:\\Users\\Lasse Andersen\\Desktop\\Cph Business\\4.Semester (Valgfag)\\Advanced Programming\\WebFirebasePesistence\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+    private String path = "C:\\\\Users\\\\MoK\\\\Desktop\\\\Datamatiker\\\\4.sem\\\\Advanced Prog\\\\Advancedeksame-project\\\\WebFirebasePesistence\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Context
@@ -46,12 +46,18 @@ public class UsersResource implements IUserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response getUser(@PathParam("userName") String userName) {
+             String notFound = "NOT FOUND";
         IFirebaseConnection IFC = new FirebaseConnectionImp();
         IFC.initFirebase(link, path);
         IUserPersistence firebase = new FirebasePersistenceImp();
+          IUser user = firebase.getUser(userName);
+              if (user == null) {
+            //Returns a string with notFound 
+            return Response.status(Response.Status.NOT_FOUND).entity(gson.toJson(notFound)).build();
+        }
         return Response
                 .status(200)
-                .entity(gson.toJson(firebase.getUser(userName)))
+                .entity(gson.toJson(user))
                 .build();
     }
 

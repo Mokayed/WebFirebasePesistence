@@ -12,7 +12,7 @@ public class DemoFirebasePut {
 
     public static void main(String[] args) throws IOException {
         String link = "https://finaleapp-dcad7.firebaseio.com";
-        String path = "C:\\Users\\Lasse Andersen\\Desktop\\Cph Business\\4.Semester (Valgfag)\\Advanced Programming\\WebFirebasePesistence\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
+        String path = "C:\\\\Users\\\\MoK\\\\Desktop\\\\Datamatiker\\\\4.sem\\\\Advanced Prog\\\\Advancedeksame-project\\\\WebFirebasePesistence\\\\finaleapp-dcad7-firebase-adminsdk-ultqu-62bc411e68.json";
 
         IFirebaseConnection IFC = new FirebaseConnectionImp();
         IFC.initFirebase(link, path);
