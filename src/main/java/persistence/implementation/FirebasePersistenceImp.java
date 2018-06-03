@@ -34,8 +34,8 @@ public class FirebasePersistenceImp implements IUserPersistence {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("/");
         childReference = databaseReference.child("users").child(user.getUsername());
-        IUser testUser = getUser(user.getUsername());
-        if (testUser == null) {
+        IUser testgetUser = getUser(user.getUsername());
+        if (testgetUser == null) {
 
             //if (childReference != null) {
             CompletionListenerImpl Complistner = new CompletionListenerImpl();
@@ -63,7 +63,7 @@ public class FirebasePersistenceImp implements IUserPersistence {
 
         try {
             countDownLatch.await();
-            //z countDownLatch.await(1, TimeUnit.SECONDS);
+            // countDownLatch.await(1, TimeUnit.SECONDS);
 
         } catch (InterruptedException ex) {
             Logger.getLogger(FirebasePersistenceImp.class
@@ -71,7 +71,7 @@ public class FirebasePersistenceImp implements IUserPersistence {
         }
 
         IUser user = listener.getUser();
-        //System.out.println(admin.toString());
+        //System.out.println(user.toString());
         return user;
 
     }
@@ -98,44 +98,24 @@ public class FirebasePersistenceImp implements IUserPersistence {
 
     @Override
     public List<IUser> getAllUsers() {
-        List<IUser> allUsers = new ArrayList<>();
+
         databaseReference = FirebaseDatabase.getInstance().getReference("/");
         childReference = databaseReference.child("users");
-
-        childReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot ds) {
-                for (DataSnapshot child : ds.getChildren()) {
-                    allUsers.add(child.getValue(User.class));
-                    /* allUsers.add(new User(
-                            child.child("address").getValue().toString(),
-                            Double.parseDouble(child.child("latitude").getValue().toString()),
-                            Double.parseDouble(child.child("longitude").getValue().toString()),
-                            child.child("password").getValue().toString(),
-                            child.child("role").getValue().toString(),
-                            child.child("title").getValue().toString(),
-                            child.child("username").getValue().toString()
-                    ));*/
-                }
-                countDownLatch.countDown();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError de) {
-                de.getMessage();
-            }
-        });
+        listener = new ValueEListnerImpl();
+        childReference.addValueEventListener(listener);
         try {
             countDownLatch.await();
         } catch (Exception e) {
 
         }
+        List<IUser> allUsers = listener.getAllUsers();
         return allUsers;
     }
 
     private class ValueEListnerImpl implements ValueEventListener {
 
         private IUser user;
+        private final List<IUser> allUsersList = new ArrayList<>();
 
         public ValueEListnerImpl() {
         }
@@ -143,12 +123,12 @@ public class FirebasePersistenceImp implements IUserPersistence {
         @Override
         public void onDataChange(DataSnapshot ds) {
             user = ds.getValue(User.class);
-            /* if (adminInfo == null) {
-                System.out.println("Ingen bruger findes");
-            } else {
-            } */
             countDownLatch.countDown();
+            for (DataSnapshot child : ds.getChildren()) {
+                allUsersList.add(child.getValue(User.class));
 
+            }
+            countDownLatch.countDown();
         }
 
         @Override
@@ -158,6 +138,11 @@ public class FirebasePersistenceImp implements IUserPersistence {
 
         private IUser getUser() {
             return user;
+        }
+
+        private List<IUser> getAllUsers() {
+ 
+            return allUsersList;
         }
 
     }

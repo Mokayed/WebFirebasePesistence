@@ -100,7 +100,7 @@ function deleteUserwithuserName() {
                     headers: myHeaders
                 });
         promise.then(handleErrors).then(function (user) {
-            alert(userName+" "+"is been deleted");
+            alert(userName + " " + "is been deleted");
             document.getElementById("tId").innerHTML = genSingleUserTable(user);
         }).catch(function (error) {
             return error.json();

@@ -46,12 +46,12 @@ public class UsersResource implements IUserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Response getUser(@PathParam("userName") String userName) {
-             String notFound = "NOT FOUND";
+        String notFound = "NOT FOUND";
         IFirebaseConnection IFC = new FirebaseConnectionImp();
         IFC.initFirebase(link, path);
         IUserPersistence firebase = new FirebasePersistenceImp();
-          IUser user = firebase.getUser(userName);
-              if (user == null) {
+        IUser user = firebase.getUser(userName);
+        if (user == null) {
             //Returns a string with notFound 
             return Response.status(Response.Status.NOT_FOUND).entity(gson.toJson(notFound)).build();
         }
